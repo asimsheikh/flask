@@ -1,7 +1,7 @@
 from __future__ import annotations 
 
 import os
-from typing import Any
+from typing import Any, Dict
 from flask import Flask, jsonify, request
 
 from pydantic import BaseModel
@@ -9,7 +9,7 @@ from db import JsonRepo
 
 class Action(BaseModel):
     _type: str
-    payload: dict[str, Any]
+    payload: Dict[str, Any]
 
 class AddPayload(BaseModel):
     goal: str
