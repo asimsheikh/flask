@@ -8,6 +8,10 @@ app = Flask(__name__)
 def index():
     return jsonify({"username": "Asim Sheikh"})
 
+@app.route('/api')
+def api():
+    return dict(id=1, username="asheikh")
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
