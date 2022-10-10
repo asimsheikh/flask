@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from typing import Any, Dict
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 from pydantic import BaseModel
 from db import JsonRepo
@@ -15,6 +16,7 @@ class AddPayload(BaseModel):
     goal: str
 
 app = Flask(__name__)
+CORS(app)
 repo = JsonRepo()
 
 @app.route('/')
