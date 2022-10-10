@@ -26,12 +26,14 @@ def api():
     if request.method == 'POST':
         action = Action(**request.json)
         payload = action.payload
+
+        print(action)
         
         if action._type == 'GET_FOCUS':
             return repo.get_data()
 
         elif action._type == 'ADD_GOAL':
-            payload = AddPayload(**action.payload)
+            payload = AddPayload(**payload)
             repo.add_goals(payload.goal)
             return {"ok": "True"}
 
