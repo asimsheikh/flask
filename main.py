@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from db import JsonRepo
 
 class Action(BaseModel):
-    type: str
+    _type: str
     payload: dict[str, Any]
 
 class AddPayload(BaseModel):
@@ -27,16 +27,16 @@ def api():
         action = Action(**request.json)
         payload = action.payload
         
-        if action.type == 'GET_FOCUS':
+        if action._type == 'GET_FOCUS':
             return repo.get_data()
 
-        elif action.type == 'ADD_GOAL':
+        elif action._type == 'ADD_GOAL':
             payload = AddPayload(**action.payload)
             repo.add_goals(payload.goal)
             return {"ok": "True"}
 
         else:
-            return {"ok": "False", "message": f"Not a valid action type {action.type}"}
+            return {"ok": "False", "message": f"Not a valid action type {action._type}"}
 
 
 if __name__ == '__main__':
