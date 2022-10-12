@@ -10,5 +10,5 @@ class JsonRepo:
         self.data.get('goals').append(goal)
     
     def clear(self):
-        self.data = dict()
+        self.data = dict( id=1, name="Health", goals=[])
 
