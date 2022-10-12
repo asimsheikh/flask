@@ -8,4 +8,7 @@ class JsonRepo:
 
     def add_goals(self, goal):
         self.data.get('goals').append(goal)
+    
+    def clear(self):
+        self.data = dict()
 

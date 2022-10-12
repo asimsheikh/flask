@@ -39,6 +39,10 @@ def api():
             repo.add_goals(payload.goal)
             return {"ok": "True"}
 
+        elif action.name == 'CLEAR_FOCUS':
+            repo.clear()
+            return {"ok": "True"}
+
         else:
             return {"ok": "False", "message": f"Not a valid action type {action.name}"}
 
