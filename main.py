@@ -22,7 +22,7 @@ class AddPayload(BaseModel):
     goal: str
 
 class AddNotePayload(BaseModel):
-    date: datetime
+    date: str 
     text: str
 
 app = Flask(__name__)
@@ -30,6 +30,9 @@ CORS(app)
 repo = JsonRepo()
 
 faker = Faker()
+
+def parse_js_date(js_date_string: str) -> datetime:
+    return datetime.strptime(js_date_string, '%a, %d %b %Y %H:%M:%S GMT')
 
 @app.route('/')
 def index():
@@ -59,7 +62,7 @@ def api():
             payload = AddNotePayload(**payload)
             note = Note(id=random.randint(a=1,b=10000),
                         uuid=uuid4(), 
-                        date=payload.date,
+                        date=parse_js_date(payload.date),
                         text=payload.text)
             repo.add_note(note)
             return {"ok": True}
