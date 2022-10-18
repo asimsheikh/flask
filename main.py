@@ -72,7 +72,8 @@ def api():
 
         elif action.name == 'GET_NOTES':
             notes = repo.get_notes()
-            notes = [ stringify_note(note) for note in notes ]
+            if notes:
+                notes = [ stringify_note(note) for note in notes ]
             return notes
 
         else:
