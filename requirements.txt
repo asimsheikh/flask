@@ -2,3 +2,4 @@ Flask
 pydantic
 gunicorn
 flask_cors
+faker
