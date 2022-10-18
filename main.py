@@ -34,6 +34,9 @@ faker = Faker()
 def parse_js_date(js_date_string: str) -> datetime:
     return datetime.strptime(js_date_string, '%a, %d %b %Y %H:%M:%S GMT')
 
+def stringify_note(note: Note) -> dict[str, str]:
+    return { k:str(v) for k,v in note.dict().items() }           
+
 @app.route('/')
 def index():
     return jsonify({"username": "Asim Sheikh"})
@@ -68,7 +71,9 @@ def api():
             return {"ok": True}
 
         elif action.name == 'GET_NOTES':
-            return repo.get_notes()
+            notes = repo.get_notes()
+            notes = [ stringify_note(note) for note in notes ]
+            return notes
 
         else:
             return {"ok": "False", "message": f"Not a valid action type {action.name}"}
