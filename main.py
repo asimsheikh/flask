@@ -25,6 +25,9 @@ class AddNotePayload(BaseModel):
     date: str 
     text: str
 
+class DeleteNotePayload(BaseModel):
+    id: int
+
 app = Flask(__name__)
 CORS(app)
 repo = JsonRepo()
@@ -68,6 +71,11 @@ def api():
                         date=parse_js_date(payload.date),
                         text=payload.text)
             repo.add_note(note)
+            return {"ok": True}
+
+        elif action.name == 'DELETE_NOTE':
+            payload = DeleteNotePayload(**payload)
+            repo.delete_note(payload.id)
             return {"ok": True}
 
         elif action.name == 'GET_NOTES':

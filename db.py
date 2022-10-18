@@ -24,6 +24,9 @@ class JsonRepo:
         self.notes.append(note)
         self.notes.sort(key=lambda note: note.date)
     
+    def delete_note(self, id: int):
+        self.notes = list(filter(lambda note: note.id != id, self.notes))
+    
     def get_notes(self):
         return self.notes
 
