@@ -1,12 +1,18 @@
-from __future__ import annotations 
+from __future__ import annotations
+from datetime import datetime 
 
 import os
+import random  
+from uuid import uuid4
+
 from typing import Any, Dict
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from pydantic import BaseModel
-from db import JsonRepo
+from db import JsonRepo, Note
+
+from faker import Faker
 
 class Action(BaseModel):
     name: str
@@ -15,9 +21,15 @@ class Action(BaseModel):
 class AddPayload(BaseModel):
     goal: str
 
+class AddNotePayload(BaseModel):
+    date: datetime
+    text: str
+
 app = Flask(__name__)
 CORS(app)
 repo = JsonRepo()
+
+faker = Faker()
 
 @app.route('/')
 def index():
@@ -37,11 +49,23 @@ def api():
         elif action.name== 'ADD_GOAL':
             payload = AddPayload(**payload)
             repo.add_goals(payload.goal)
-            return {"ok": "True"}
+            return {"ok": True }
 
         elif action.name == 'CLEAR_FOCUS':
             repo.clear()
-            return {"ok": "True"}
+            return {"ok": True}
+
+        elif action.name == 'ADD_NOTE':
+            payload = AddNotePayload(**payload)
+            note = Note(id=random.randint(a=1,b=10000),
+                        uuid=uuid4(), 
+                        date=payload.date,
+                        text=payload.text)
+            repo.add_note(note)
+            return {"ok": True}
+
+        elif action.name == 'GET_NOTES':
+            return repo.get_notes()
 
         else:
             return {"ok": "False", "message": f"Not a valid action type {action.name}"}

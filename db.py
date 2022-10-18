@@ -9,7 +9,7 @@ class Note(BaseModel):
     date: datetime
     text: str 
 class JsonRepo:
-    def __init__(self, name='JSON Repo'):
+    def __init__(self, name: str='JSON Repo'):
         self.name = name
         self.data = dict( id=1, name="Health", goals=[])
         self.notes: List[Note] = []
@@ -23,6 +23,9 @@ class JsonRepo:
     def add_note(self, note: Note):
         self.notes.append(note)
         self.notes.sort(key=lambda note: note.date)
+    
+    def get_notes(self):
+        return self.notes
 
     def clear(self):
         self.data = dict( id=1, name="Health", goals=[])
