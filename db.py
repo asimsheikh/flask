@@ -3,11 +3,13 @@ from typing import List
 from uuid import uuid4, UUID
 
 from pydantic import BaseModel
+
 class Note(BaseModel):
     id: int
     uuid: UUID
     date: datetime
     text: str 
+
 class JsonRepo:
     def __init__(self, name: str='JSON Repo'):
         self.name = name
